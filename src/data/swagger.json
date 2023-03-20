@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "version": "0.0.5",
+    "version": "0.0.6",
     "title": "Petly API 1.0",
     "description": "Creative team 7 back-end API"
   },
@@ -326,28 +326,25 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "404",
+                  "type": "object",
+                  "example": {
+                    "message": "Not found!"
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/notices/selected": {
-      "post": {
-        "tags": [
-          "Notices"
-        ],
-        "summary": "Add the ad to favorites",
-        "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK \"Successful operation\""
-          }
-        }
-      },
       "get": {
         "tags": [
           "Notices"
@@ -367,6 +364,33 @@
       }
     },
     "/notices/selected/{noticeId}": {
+      "post": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Add the ad to favorites",
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "description": "notice id string",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK \"Successful operation\""
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Notices"
@@ -396,11 +420,11 @@
       }
     },
     "/notices/user": {
-      "post": {
+      "get": {
         "tags": [
           "Notices"
         ],
-        "summary": "Add ads to a category",
+        "summary": "Receive all users ads",
         "parameters": [],
         "security": [
           {
@@ -409,15 +433,22 @@
         ],
         "responses": {
           "200": {
-            "description": "OK \"Successful operation\""
+            "description": "OK \"Successful operation\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeResponses"
+                }
+              }
+            }
           }
         }
       },
-      "get": {
+      "post": {
         "tags": [
           "Notices"
         ],
-        "summary": "Receive all users ads",
+        "summary": "Add ads to a category",
         "parameters": [],
         "security": [
           {
