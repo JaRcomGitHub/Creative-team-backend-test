@@ -7,7 +7,7 @@ async function getNotice(req, res) {
     const result = await Notice.findById(noticeId);
 
     if (!result) {
-      return res.json({ message: "Not found!" });
+      return res.status(404).json({ message: "Not found!" });
     }
 
     res.json(result);
