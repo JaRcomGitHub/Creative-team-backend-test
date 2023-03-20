@@ -9,7 +9,7 @@ async function searchByTitle(req, res) {
     });
 
     if (searchResult.length === 0) {
-      return res.json({
+      return res.status(404).json({
         message: "We did not find any notices for your request",
       });
     }
