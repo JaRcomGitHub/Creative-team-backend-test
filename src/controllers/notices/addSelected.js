@@ -4,15 +4,17 @@ const { Notice } = require("../../schemas/notice");
 async function addSelected(req, res) {
   try {
     const { noticeId } = req.params;
-    const { _id: owner } = req.user;
+    const { userId } = req.user;
 
-    const findNotice = await Notice.findByIdAndUpdate(
-      noticeId,
-      { $set: { owner } },
-      { new: true }
-    );
+    const findNotice = await Notice.findById(noticeId);
+    console.log("findNotice", findNotice);
 
-    await User.findByIdAndUpdate(owner, {
+    if (!findNotice) {
+      res.status(404);
+      throw new Error("Not found notice");
+    }
+
+    await User.findByIdAndUpdate(userId, {
       $addToSet: { selected: findNotice },
     });
 
