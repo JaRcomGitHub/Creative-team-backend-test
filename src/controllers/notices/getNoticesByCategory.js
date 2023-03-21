@@ -8,7 +8,8 @@ async function getNoticesByCategory(req, res) {
 
     res.json(result);
   } catch (error) {
-    res.status(500).json({ message: error.codeName });
+    res.status(500);
+    throw new Error(error);
   }
 }
 
