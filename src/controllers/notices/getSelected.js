@@ -5,16 +5,13 @@ async function getSelected(req, res) {
   try {
     const { id } = req.user;
     const user = await User.findById(id);
-    // console.log("user.selected", user.selected);
 
-    // const result = await Notice.find({
-    //   _id: { $elemMatch: { address: "user@gmail.com" } },
-    // });
-    // console.log("result", result);
+    const result = await Notice.find({}).where("_id").in(user.selected);
 
-    return res.status(200).json({ selected: user.selected });
+    res.status(200).json(result);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500);
+    throw new Error(error);
   }
 }
 
