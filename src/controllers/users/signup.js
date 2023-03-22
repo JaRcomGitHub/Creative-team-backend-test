@@ -12,7 +12,7 @@ async function signup(req, res) {
   }
 
   const { email, password } = req.body;
-  console.log(email);
+
   // get and verify data
   if (!email || !password) {
     res.status(400);
@@ -43,8 +43,9 @@ async function signup(req, res) {
     throw new Error("Unable create user");
   }
 
+  const { name, cityRegion, mobilePhone, accessToken } = newUser;
   return res.status(201).json({
-    user: newUser,
+    user: { email, name, cityRegion, mobilePhone, accessToken },
   });
 }
 
