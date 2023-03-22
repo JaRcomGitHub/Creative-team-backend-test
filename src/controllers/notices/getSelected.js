@@ -11,6 +11,8 @@ async function getSelected(req, res) {
     breed: 1,
     location: 1,
     birthdate: 1,
+    imageURL: 1,
+    price: 1,
   });
 
   return res.status(200).json(result);
