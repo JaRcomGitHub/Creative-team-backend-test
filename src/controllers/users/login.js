@@ -38,11 +38,9 @@ async function login(req, res) {
   }
 
   // return token
-  res.json({
-    data: {
-      token: user.accessToken,
-      user: user.email,
-    },
+  const { name, cityRegion, mobilePhone, accessToken } = user;
+  return res.status(200).json({
+    user: { email, name, cityRegion, mobilePhone, accessToken },
   });
 }
 
