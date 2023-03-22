@@ -2,15 +2,21 @@ const { Notice } = require("../../schemas/notice");
 
 async function deleteUserNotice(req, res) {
   const { noticeId } = req.params;
+  const { _id: owner } = req.user;
 
-  const removeResult = await Notice.findByIdAndRemove(noticeId);
+  const deleteNotice = await Notice.findOneAndDelete({
+    _id: noticeId,
+    owner,
+  });
 
-  if (!removeResult) {
+  if (!deleteNotice) {
     res.status(404);
     throw new Error("Not found");
   }
 
-  return res.status(200).json({ message: "notice was removed" });
+  await User.updateOne({ _id: owner }, { $pull: { notices: noticeId } });
+
+  return res.status(200).json({ message: "Notice successfully deleted!" });
 }
 
 module.exports = deleteUserNotice;
