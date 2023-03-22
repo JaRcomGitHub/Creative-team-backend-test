@@ -11,7 +11,8 @@ async function signup(req, res) {
     throw new Error(error.message);
   }
 
-  const { email, password } = req.body;
+  const email = req.body.email.trim();
+  const password = req.body.password.trim();
 
   // get and verify data
   if (!email || !password) {
@@ -27,7 +28,7 @@ async function signup(req, res) {
   }
 
   // if not - hash password and create user
-  const newUser = await User.create({ ...req.body });
+  const newUser = await User.create({ ...req.body, email, password });
   newUser.setPassword(password);
 
   // generate token
@@ -45,7 +46,7 @@ async function signup(req, res) {
 
   const { name, cityRegion, mobilePhone, accessToken } = newUser;
   return res.status(201).json({
-    user: { email, name, cityRegion, mobilePhone, accessToken },
+    user: { email: newUser.email, name, cityRegion, mobilePhone, accessToken },
   });
 }
 
