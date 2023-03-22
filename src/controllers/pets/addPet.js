@@ -1,9 +1,9 @@
 const { Pet } = require("../../schemas/pet");
-const { petsSchema } = require("../../schemas/joiValidation");
+const { petSchema } = require("../../schemas/joiValidation");
 
 async function addPet(req, res) {
   // joi validation
-  const { error } = petsSchema.validate(req.body);
+  const { error } = petSchema.validate(req.body);
   if (error) {
     res.status(400);
     throw new Error(error.message);
