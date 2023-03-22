@@ -11,8 +11,8 @@ const userSchema = Joi.object({
     .email({ minDomainSegments: 2 })
     .pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/)
     .min(5),
+  password: Joi.string().alphanum().min(7).max(32),
   name: Joi.string().pattern(/^[\p{L}\p{M}_-]+$/u),
-  name: Joi.string(),
   cityRegion: Joi.string(),
   mobilePhone: Joi.string().pattern(/^\+380\d{9}$/),
   birthdate: Joi.date(),
