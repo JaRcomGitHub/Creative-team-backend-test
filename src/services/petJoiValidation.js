@@ -1,7 +1,7 @@
-const { petsSchema } = require("../schemas/joiValidation");
+const { petSchema } = require("../schemas/joiValidation");
 
 const petJoiValidation = (data) => {
-  const { error } = petsSchema.validate(data);
+  const { error } = petSchema.validate(data);
   if (error) {
     throw new Error(error.message);
   }
