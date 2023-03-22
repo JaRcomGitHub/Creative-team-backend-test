@@ -1,13 +1,19 @@
 const Joi = require("joi");
 
 const authSchema = Joi.object({
-  email: Joi.string().trim().email({ minDomainSegments: 2 }).required(),
+  email: Joi.string()
+    .trim()
+    .email({ minDomainSegments: 2 })
+    .pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/)
+    .min(5)
+    .required(),
   password: Joi.string().alphanum().min(7).max(32).required(),
 });
 
 // Users
 const userSchema = Joi.object({
   email: Joi.string()
+    .trim()
     .email({ minDomainSegments: 2 })
     .pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/)
     .min(5),
