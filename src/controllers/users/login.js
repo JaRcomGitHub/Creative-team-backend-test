@@ -12,7 +12,9 @@ async function login(req, res) {
   }
 
   // get and verify data
-  const { email, password } = req.body;
+  const email = req.body.email.trim();
+  const password = req.body.password.trim();
+
   if (!password || !email) {
     res.status(400);
     throw new Error("Please, provide all required fields");
@@ -40,7 +42,7 @@ async function login(req, res) {
   // return token
   const { name, cityRegion, mobilePhone, accessToken } = user;
   return res.status(200).json({
-    user: { email, name, cityRegion, mobilePhone, accessToken },
+    user: { email: user.email, name, cityRegion, mobilePhone, accessToken },
   });
 }
 
